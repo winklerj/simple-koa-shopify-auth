@@ -1,4 +1,4 @@
-import { readFile } from "fs/promises";
+import { promises as fs }  from "fs";
 import { resolve as resolvePath } from "path";
 
 import Shopify from "@shopify/shopify-api";
@@ -57,7 +57,7 @@ async function getTopLevelRedirectScript(host: string, redirectTo: string, apiKe
     console.error("Error decoding host", error);
   }
   // We used to load the script from unpkg.com, but that sometimes was too slow, so we are now loading the script file directly and injecting the code.
-  const appBridgeScript = await readFile(APP_BRIDGE_FILE_PATH);
+  const appBridgeScript = await fs.readFile(APP_BRIDGE_FILE_PATH);
   return `
     <!-- Shopify App Bridge -->
     <script type="text/javascript">${appBridgeScript}</script>
